@@ -1,2 +1,2 @@
-# Search-Engine
+# MergeSearch
 web application that refines searches
