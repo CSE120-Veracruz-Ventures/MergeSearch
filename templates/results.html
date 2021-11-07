@@ -1,0 +1,12 @@
+<table>
+    {% for index, result in results.iterrows() %}
+        <tr id={{ index }}>
+        {% for column in result %}
+            <td>{{ column }}</td>
+        {% endfor %}
+            <td>
+            <input type="checkbox" name="checkboxes" id={{ index }} value={{ index }}>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
