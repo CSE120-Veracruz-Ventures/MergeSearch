@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Grades</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+    <link href="../static/style.css" rel="stylesheet" />
+    <script src="../static/script.js"></script>
+  </head>
+
+  <body>
+    
+    <form name="search" method="POST" action="{{ url_for('actions') }}">
+    <input type="text" name="searchbar" id="searchbar" placeholder="Search"
+      onchange="this.form.submit()" onkeypress="this.form.submit()"
+      onpaste="this.form.submit()" oninput="this.form.submit()">
+    </form>
+    <button type="submit" name="submitHide" value="submitHide" class="button" onclick="hide()">Hide</button>
+
+      <table>
+          {% for index, result in results.iterrows() %}
+              <tr id={{ index }}>
+              {% for column in result %}
+                  <td>{{ column }}</td>
+              {% endfor %}
+                  <td>
+                  <input type="checkbox" name="checkboxes" id={{ index }} value={{ index }}>
+                  </td>
+              </tr>
+          {% endfor %}
+      </table>
+
+    <button type="button" name="new" value="new" class="button">New Search</button>
+  </body>
+</html>
