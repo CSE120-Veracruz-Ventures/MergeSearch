@@ -1,0 +1,20 @@
+<table id="results_table">
+  <thead>
+    <tr>
+      <th><button type="button" name="submitHide" value="submitHide" class="button" onclick="hideRow()">Hide</button></th>
+      {% for header in results.columns %}
+      <th class='col_{{ loop.index }}'>{{ header }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for index, result in results.iterrows() %}
+    <tr id='row_{{ index }}'>
+      <td><input type="checkbox" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></td>
+      {% for column in result %}
+      <td class='col_{{ loop.index }}'>{{ column }}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
