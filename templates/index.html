@@ -8,31 +8,61 @@
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
     <link href="../static/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <script src="../static/script.js"></script>
   </head>
 
   <body>
     
-    <form name="search" method="POST" action="{{ url_for('actions') }}">
+    <!--<form id="search" method="post" action="/">
     <input type="text" name="searchbar" id="searchbar" placeholder="Search"
       onchange="this.form.submit()" onkeypress="this.form.submit()"
       onpaste="this.form.submit()" oninput="this.form.submit()">
-    </form>
-    <button type="submit" name="submitHide" value="submitHide" class="button" onclick="hide()">Hide</button>
+    </form>-->
+    
+    <!--<div id="results"></div>-->
 
-      <table>
-          {% for index, result in results.iterrows() %}
-              <tr id={{ index }}>
-              {% for column in result %}
-                  <td>{{ column }}</td>
-              {% endfor %}
-                  <td>
-                  <input type="checkbox" name="checkboxes" id={{ index }} value={{ index }}>
-                  </td>
-              </tr>
+    <table id="column_filter">
+      <caption>Select columns to display:</caption>
+      <tr>
+        {% for header in results.columns %}
+        <td>{{ header }}<input type='checkbox' name="col_checkboxes" id='col_{{ loop.index }}' onclick="toggleCol(this.id)" checked></td>
+        {% endfor %}
+      </tr>
+    </table>
+    <table id="results_table" class="display">
+      <thead>
+        <tr>
+          <th><button type="button" name="submitHide" value="submitHide" class="button" onclick="hideRow()">Hide</button></th>
+          {% for header in results.columns %}
+          <th class='col_{{ loop.index }}'>{{ header }}</th>
           {% endfor %}
-      </table>
-
-    <button type="button" name="new" value="new" class="button">New Search</button>
+        </tr>
+      </thead>
+      <!--<tr>
+        <td></td>
+        {% for header in results.columns %}
+        <th scope="col"  class='col_{{ loop.index }}'>{{ header }}</th>
+        {% endfor %}
+      </tr>-->
+      <tbody>
+        {% for index, result in results.iterrows() %}
+        <tr id='row_{{ index }}'>
+          <!--<th scope="row"><br><input type="checkbox" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></th>-->
+          <td><input type="checkbox" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></td>
+          {% for column in result %}
+          <td class='col_{{ loop.index }}'>{{ column }}</td>
+          {% endfor %}
+          <!--<td>
+          <input type="checkbox" name="checkboxes" id={{ index }} value={{ index }}>
+          </td>-->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div id="new_searches"></div>
+    <button id="new_search" class="button" onclick="incrementSearch({{ json_data }})">New Search</button>
   </body>
 </html>
