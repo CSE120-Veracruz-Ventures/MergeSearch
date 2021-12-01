@@ -9,10 +9,12 @@ import numpy as np
 
 app = Flask(__name__)
 
+# converts csv to pandas file
 data = pd.read_csv('static/past.csv')
 
 @app.context_processor
 def inject():
+    # converts pandas to json
     return dict(json_data=data.to_json(orient='records'))
 
 @app.route('/')

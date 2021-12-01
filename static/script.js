@@ -73,6 +73,7 @@ function toggleCol(col_num) {
 
 var searches = 0;
 
+// this input is hardcoded and that's why it looks like the way it does
 function incrementSearch(data) {
     const columns = Object.keys(data[0]);
     var target = document.getElementById("new_searches");

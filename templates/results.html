@@ -1,4 +1,7 @@
-<table id="results_table">
+<div class="overflow-auto">
+<table class="table table-hover">
+  <!-- tag removed: id="results_table" -->
+  <!-- headers -->
   <thead>
     <tr>
       <th><button type="button" name="submitHide" value="submitHide" class="button" onclick="hideRow()">Hide</button></th>
@@ -7,14 +10,17 @@
       {% endfor %}
     </tr>
   </thead>
+  <!-- content of tables -->
   <tbody>
     {% for index, result in results.iterrows() %}
     <tr id='row_{{ index }}'>
       <td><input type="checkbox" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></td>
       {% for column in result %}
+      
       <td class='col_{{ loop.index }}'>{{ column }}</td>
       {% endfor %}
     </tr>
     {% endfor %}
   </tbody>
 </table>
+</div>
