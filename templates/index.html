@@ -10,11 +10,14 @@
     <link href="../static/style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
     
+    <!-- bootstrap -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- css -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     <script src="../static/script.js"></script>
+
+    <!-- jquery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script> -->
   </head>
 
   <body>
@@ -84,11 +87,15 @@
         {% endfor %}
       </tbody>
     </table>
-    </div>
+  </div>
+    
+
     <br>
+    <div class="table-responsive text-nowrap">
     <div id="new_searches">
       <button id="new_search" class="button" onclick="incrementSearch({{ json_data }})">New Search</button>
     </div>
+  </div>
   </div>
   <!-- end container -->
   </body>
