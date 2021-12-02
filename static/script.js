@@ -73,23 +73,6 @@ function toggleCol(col_num) {
 
 var searches = 0;
 
-// new increment search
-function incrementSearch() {
-    let request = new XMLHttpRequest();
-    let text = "<table border='1'><tr><th>Student</th><th>Grade</th></tr>";
-    request.open("GET", url + "/iteration");
-    request.send();
-    request.onload = () => {
-        let data = JSON.parse(request.response);
-        let keys = Object.keys(data);
-        for (let i = 0; i < keys.length; i++) {
-            text += "<tr><td>" + keys[i] + "</td><td>" + data[keys[i]] + "</td></tr>";
-        }
-        text += "</table>";
-        document.getElementById("incrementSearch").innerHTML = text;
-    }
-}
-
 // this input is hardcoded and that's why it looks like the way it does
 // old version
 // function incrementSearch(data) {
