@@ -74,59 +74,20 @@ function toggleCol(col_num) {
 var searches = 0;
 
 // new increment search
-function incrementSearch(data) {
-    const columns = Object.keys(data[0]);
-    var target = document.getElementById("new_searches");
-
-
-    let table = document.createElement('table');
-    //table.setAttribute("id", "results_table_"+searches.toString());
-    table.setAttribute("class", "display");
-    const head = document.createElement('thead');
-    const body = document.createElement('tbody');
-
-    const hide_button = document.createElement('button');
-    hide_button.setAttribute("class", "button");
-    hide_button.setAttribute("onclick", "hideRow()");
-    hide_button.appendChild(document.createTextNode("Hide"));
-    head.appendChild(document.createElement('th').appendChild(hide_button));
-
-    var count = 0;
-    for (var key in data[0]) {
-        let col = document.createElement('th');
-        col.setAttribute("class", "col_"+count.toString());
-        col.appendChild(document.createTextNode(key));
-        head.appendChild(col);
-        count++;
-    }
-    table.appendChild(head);
-
-    for (var i = 0; i < data.length; i++) {
-
-        var row = document.createElement('tr');
-        row.setAttribute("id", "row_"+i);
-
-        const checkbox = document.createElement('input');
-        checkbox.setAttribute("type", "checkbox");
-        checkbox.setAttribute("name", "row_checkboxes");
-        checkbox.setAttribute("id", "row_"+i.toString());
-        row.appendChild(document.createElement('td').appendChild(checkbox));
-
-        let col_count = 0;
-        for (var column in columns) {
-            var cell = document.createElement('td');
-            cell.setAttribute("class", "col_"+col_count.toString());
-            const value = data[i][columns[column]];
-            cell.appendChild(document.createTextNode(value));
-            row.appendChild(cell);
-            col_count++;
+function incrementSearch() {
+    let request = new XMLHttpRequest();
+    let text = "<table border='1'><tr><th>Student</th><th>Grade</th></tr>";
+    request.open("GET", url + "/iteration");
+    request.send();
+    request.onload = () => {
+        let data = JSON.parse(request.response);
+        let keys = Object.keys(data);
+        for (let i = 0; i < keys.length; i++) {
+            text += "<tr><td>" + keys[i] + "</td><td>" + data[keys[i]] + "</td></tr>";
         }
-        body.appendChild(row);
+        text += "</table>";
+        document.getElementById("incrementSearch").innerHTML = text;
     }
-
-    table.appendChild(body);
-    target.appendChild(table);
-    searches++;
 }
 
 // this input is hardcoded and that's why it looks like the way it does

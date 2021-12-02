@@ -17,13 +17,14 @@ def inject():
     # converts pandas to json
     return dict(json_data=data.to_json(orient='records'))
 
+# displays homepage
 @app.route('/')
 def home():
     return render_template('index.html', results=data)
 
+# displays first table
 @app.route('/', methods=['POST'])
 def actions():
-
     string = ''
     with open('templates/results.html', 'r') as file:
         for line in file:
@@ -39,5 +40,10 @@ def actions():
     matches = data.loc[mask.any(axis=1)]
     html_string = render_template_string(string, results=matches)
     return jsonify(resp=html_string)
+    
+# display next table
+@app.route('/iteration', methods=['GET'])
+def returnTable():
+    return data
 
 app.run(debug=True) 
