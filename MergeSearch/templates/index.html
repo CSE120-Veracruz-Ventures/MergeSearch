@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Merge Search</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+    <link href="../static/style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+    
+    <!-- bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script src="../static/script.js"></script>
+
+    <!-- jquery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.0.js"></script> -->
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">MergeSearch</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link" href="#">Home</a>
+          <a class="nav-item nav-link active" href="#">Past Projects<span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link disabled" href="#">Library</a>
+        </div>
+      </div>
+    </nav>
+    
+    <!--<form id="search" method="post" action="/">
+    <input type="text" name="searchbar" id="searchbar" placeholder="Search"
+      onchange="this.form.submit()" onkeypress="this.form.submit()"
+      onpaste="this.form.submit()" oninput="this.form.submit()">
+    </form>-->
+    
+    <!--<div id="results"></div>-->
+    
+    <!-- column filtering -->
+    <div class="container">
+      <h3>Select Display Columns</h3>
+      <table id="column_filter">
+        <caption>Select columns to display:</caption>
+        <tr>
+          {% for header in results.columns %}
+          <td>{{ header }}<input type='checkbox' class="toggle-vis" data-column="{{ loop.index }}" name="col_checkboxes" id='col_{{ loop.index }}' onclick="toggleCol(this.id)" checked></td>
+          {% endfor %}
+        </tr>
+      </table>
+
+      <div id="data_tables" class="table-responsive text-nowrap">
+        <table id="results_table" class="display">
+          <thead>
+            <tr>
+              <th class="hide_th"><button id=0 type="button" name="submitHide" value="submitHide" class="hide_button">Hide</button></th>
+              {% for header in results.columns %}
+              <th class='col_{{ loop.index }}'>{{ header }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <!--<tr>
+            <td></td>
+            {% for header in results.columns %}
+            <th scope="col"  class='col_{{ loop.index }}'>{{ header }}</th>
+            {% endfor %}
+          </tr>-->
+          <tbody>
+            {% for index, result in results.iterrows() %}
+            <tr id='row_{{ index }}'>
+              <!--<th scope="row"><br><input type="checkbox" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></th>-->
+              <td class="checkbox_cell"><input type="checkbox" class="table_checkboxes" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></td>
+              {% for column in result %}
+              <td class='col_{{ loop.index }}'>{{ column }}</td>
+              {% endfor %}
+              <!--<td>
+              <input type="checkbox" name="checkboxes" id={{ index }} value={{ index }}>
+              </td>-->
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div id="iterative_tables" class="table-responsive text-nowrap"></div>
+      </div>
+      <button id="new_search" class="button">New Search</button>
+      <button id="merge" class="button" style="display:none">Merge</button>
+    </div>
+  <!-- end container -->
+  </body>
+</html>

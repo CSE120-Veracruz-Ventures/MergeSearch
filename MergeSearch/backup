@@ -1,0 +1,266 @@
+/*$('#results_table tbody').on('click', 'input[type="checkbox"]', function() {
+    var row_id = $(this).parent().parent();
+    $(row_id).toggleClass('selected');
+});
+$('#hide_t1').click(function() {
+    dataTable1.rows('.selected').remove().draw(false);
+});
+
+$('#new_table tbody').on('click', 'input[type="checkbox"]', function() {
+    var row_id = $(this).parent().parent();
+    $(row_id).toggleClass('selected');
+});
+$('#hide_t2').click(function() {
+    dataTable2.rows('.selected').remove().draw(false);
+});*/
+
+
+
+/*$(document).ready(function() {
+
+    $('form').on('submit', function(event) {
+
+        $.ajax({
+            url: '/',
+            data: {keyword: $('#searchbar').val()},
+            type: 'POST',
+            dataType: 'json',
+            success: function(response){
+                console.log(response.resp)
+                alert(JSON.stringify(response.resp))
+                $('#results').html(response.resp)
+            },
+            failure: function(response){
+                alert('failure')
+            }
+        })
+        .done(function(response) {
+            $('#results').html(response.resp);
+        });
+        event.preventDefault();
+    });
+
+});*/
+
+function hideRow(name, tableid) {
+    
+    /*var checkboxes = document.getElementsByName(name);
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            //var row = document.getElementById(checkboxes[i].id);
+            var index = checkboxes[i].parentNode.parentNode.rowIndex;
+            console.log(index);
+            var table = document.getElementById(tableid);
+            table.deleteRow(index);
+            //row.style.display = 'none';
+        }
+    }*/
+
+}
+
+function toggleCol(col_num) {
+    /*var checkbox = document.getElementById(col_num);
+    var col = document.getElementsByClassName(col_num);
+    if (checkbox.checked) {
+        for (var i = 0; i < col.length; i++) {
+            col[i].style.display = 'table-cell';
+        }
+        document.getElementById(col_num+'_head').style.display = 'table-cell';
+    } else {
+        for (var i = 0; i < col.length; i++) {
+            col[i].style.display = 'none';
+        }
+        document.getElementById(col_num+'_head').style.display = 'none';
+    }*/
+}
+
+function showSecondTable() {
+    /*div.style.display = '';
+    document.getElementById('new_search').style.display = 'none';
+    document.getElementById('merge').style.display = '';*/
+    
+}
+
+var searches = 0;
+
+// new increment search
+function incrementSearch(data) {
+    const columns = Object.keys(data[0]);
+    //var target = document.getElementById("new_searches");
+
+
+    const table = document.getElementById('new-table');
+    //table.setAttribute("id", "results_table_"+searches.toString());
+    //table.setAttribute("class", "display");
+    const head = document.createElement('thead');
+    const body = document.createElement('tbody');
+
+    const hide_button = document.createElement('button');
+    hide_button.setAttribute("class", "button");
+    hide_button.setAttribute("onclick", "hideRow()");
+    hide_button.appendChild(document.createTextNode("Hide"));
+    head.appendChild(document.createElement('th').appendChild(hide_button));
+
+    var count = 0;
+    for (var key in data[0]) {
+        let col = document.createElement('th');
+        col.setAttribute("class", "col_"+count.toString());
+        col.appendChild(document.createTextNode(key));
+        head.appendChild(col);
+        count++;
+    }
+    table.appendChild(head);
+
+    for (var i = 0; i < data.length; i++) {
+
+        var row = document.createElement('tr');
+        row.setAttribute("id", "row_"+i);
+
+        const checkbox = document.createElement('input');
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("name", "row_checkboxes");
+        checkbox.setAttribute("id", "row_"+i.toString());
+        row.appendChild(document.createElement('td').appendChild(checkbox));
+
+        let col_count = 0;
+        for (var column in columns) {
+            var cell = document.createElement('td');
+            cell.setAttribute("class", "col_"+col_count.toString());
+            const value = data[i][columns[column]];
+            cell.appendChild(document.createTextNode(value));
+            row.appendChild(cell);
+            col_count++;
+        }
+        body.appendChild(row);
+    }
+
+    table.appendChild(body);
+    //target.appendChild(table);
+    searches++;
+}
+
+// this input is hardcoded and that's why it looks like the way it does
+// old version
+// function incrementSearch(data) {
+//     const columns = Object.keys(data[0]);
+//     var target = document.getElementById("new_searches");
+
+//     let table = document.createElement('table');
+//     //table.setAttribute("id", "results_table_"+searches.toString());
+//     table.setAttribute("class", "display");
+//     const head = document.createElement('thead');
+//     const body = document.createElement('tbody');
+
+//     const hide_button = document.createElement('button');
+//     hide_button.setAttribute("class", "button");
+//     hide_button.setAttribute("onclick", "hideRow()");
+//     hide_button.appendChild(document.createTextNode("Hide"));
+//     head.appendChild(document.createElement('th').appendChild(hide_button));
+
+//     var count = 0;
+//     for (var key in data[0]) {
+//         let col = document.createElement('th');
+//         col.setAttribute("class", "col_"+count.toString());
+//         col.appendChild(document.createTextNode(key));
+//         head.appendChild(col);
+//         count++;
+//     }
+//     table.appendChild(head);
+
+//     for (var i = 0; i < data.length; i++) {
+
+//         var row = document.createElement('tr');
+//         row.setAttribute("id", "row_"+i);
+
+//         const checkbox = document.createElement('input');
+//         checkbox.setAttribute("type", "checkbox");
+//         checkbox.setAttribute("name", "row_checkboxes");
+//         checkbox.setAttribute("id", "row_"+i.toString());
+//         row.appendChild(document.createElement('td').appendChild(checkbox));
+
+//         let col_count = 0;
+//         for (var column in columns) {
+//             var cell = document.createElement('td');
+//             cell.setAttribute("class", "col_"+col_count.toString());
+//             const value = data[i][columns[column]];
+//             cell.appendChild(document.createTextNode(value));
+//             row.appendChild(cell);
+//             col_count++;
+//         }
+//         body.appendChild(row);
+//     }
+
+//     table.appendChild(body);
+//     target.appendChild(table);
+//     searches++;
+// }
+
+function merge(json_data) {
+    /*document.getElementById('merge').style.display = 'none';
+    var table1  = $('#results_table').DataTable().rows().data().toArray();
+    var table2 = $('#new_table').DataTable().rows().data().toArray();
+    var merged = table1;
+    for (let i = 0; i < table2.length; i++) {
+        merged.push(table2[i]);
+    }
+
+    // removes duplicates
+    // decides what a dupe is by the student names column (9) and the team name column (4)
+    merged = merged.filter((v,i,a)=>a.findIndex(t=>(t[4] === v[4] && t[9] === v[9])) === i);
+
+    console.log(merged);
+    dataTable1.clear().draw();
+    dataTable1.rows.add(merged);
+    dataTable1.columns.adjust().draw();
+    var div = document.getElementById('new_searches');
+    div.style.display = 'none';
+    dataTable2.clear().draw();
+    dataTable2.rows.add(arr);
+
+    dataTable2.columns.adjust().draw();
+    document.getElementById('new_search').style.display = '';*/
+}
+
+
+
+
+
+
+
+<br>
+
+    <div id="new_searches" style="display:none">
+      <table id="new_table" class="display">
+        <thead>
+          <tr>
+            <th><button id="hide_t2" type="button" name="submitHide" value="submitHide" class="hide_button">Hide</button></th>
+            {% for header in results.columns %}
+            {% if (header != '') %}
+            <th class='col_{{ loop.index }}'>{{ header }}</th>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <!--<tr>
+          <td></td>
+          {% for header in results.columns %}
+          <th scope="col"  class='col_{{ loop.index }}'>{{ header }}</th>
+          {% endfor %}
+        </tr>-->
+        <tbody>
+          {% for index, result in results.iterrows() %}
+          <tr id='new_row_{{ index }}'>
+            <!--<th scope="row"><br><input type="checkbox" name="row_checkboxes" id='row_{{ index }}' value={{ index }}></th>-->
+            <td class="checkbox_cell"><input type="checkbox" class="table_checkboxes" name="new_row_checkboxes" id='new_row_{{ index }}' value={{ index }}></td>
+            {% for column in result %}
+            <td class='col_{{ loop.index }}'>{{ column }}</td>
+            {% endfor %}
+            <!--<td>
+            <input type="checkbox" name="checkboxes" id={{ index }} value={{ index }}>
+            </td>-->
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+    </div>
