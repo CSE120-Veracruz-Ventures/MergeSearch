@@ -1,3 +1,5 @@
+/* Unused code */
+
 /*$('#results_table tbody').on('click', 'input[type="checkbox"]', function() {
     var row_id = $(this).parent().parent();
     $(row_id).toggleClass('selected');
